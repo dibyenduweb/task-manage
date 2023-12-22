@@ -182,7 +182,7 @@ const Dashboard = () => {
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/addtask">Add Task</NavLink>
-                                </li>
+                                </li>y
                             </>
                         ) : null}
                         {/* Default menus */}

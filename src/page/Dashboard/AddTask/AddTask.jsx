@@ -1,21 +1,37 @@
 import { useForm } from "react-hook-form";
-import axios from "axios"; // Make sure to install axios: npm install axios
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useAuth from "../../../Hooks/useAuth";
 
 const AddTask = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+  const { user } = useAuth();
+  const email = user.email;
 
   const onSubmit = async (data) => {
     try {
+      data.email = email;
       // Send a POST request to the backend API to save the task data in MongoDB
-      const response = await axios.post("http://localhost:5000/addtask", data);
+      const response = await axios.post("https://task-management-server-flame-one.vercel.app/addtask", data);
       console.log("Task added successfully:", response.data);
+
+      // Show a success toast
+      toast.success("Task added successfully!");
+
+      // Reset the form fields
+      reset();
     } catch (error) {
       console.error("Error adding task:", error.message);
+
+      // Show an error toast
+      toast.error("Error adding task. Please try again.");
     }
   };
 
   return (
     <>
+      <ToastContainer />
       <div className="hero bg-base-200">
         <div className="hero-content flex-col">
           <div className="text-center lg:text-left">
